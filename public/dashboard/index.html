@@ -94,20 +94,138 @@
 
       <!-- segment -->
       <section
-        class="bg-white p-4 border-2 border-neutral-300 rounded-2xl shadow-lg mb-8"
+        class="bg-white p-4 border-2 border-neutral-200 rounded-2xl shadow-lg mb-8"
       >
+        <!-- segment name -->
         <div class="flex justify-between items-start mb-2">
-          <h2 class="text-2xl font-semibold text-neutral-900">Module 1</h2>
-          <p class="text-base text-neutral-600 pt-1">avg. 5m 20s</p>
+          <h2 class="text-2xl font-semibold text-neutral-900">Segment Name</h2>
         </div>
 
-        <p class="text-base text-neutral-700 text-lg">Currently Active</p>
+        <h3 class="text-base text-neutral-700 text-lg !font-semibold">
+          Average Statistics
+        </h3>
+
+        <div
+          class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
+        >
+          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+            <div
+              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+            >
+              <span class="truncate">avg. actions/min</span>
+              <div class="relative group ml-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4 text-neutral-500 cursor-help"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+                <span
+                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                >
+                  Average number of actions performed by the user per minute.
+                  This includes mouse movements, clicks, and keyboard inputs.
+                  <br /><br />
+                  Use this with comparison to the segment average to gauge if
+                  how actively the user is engaging with the segment. Too much
+                  activity might indicate confusion, while too little might
+                  indicate disengagement.
+                </span>
+              </div>
+            </div>
+            <p class="text-xl sm:text-2xl font-bold text-neutral-900">16.3</p>
+          </div>
+
+          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+            <div
+              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+            >
+              <span class="truncate">average time taken</span>
+              <div class="relative group ml-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4 text-neutral-500 cursor-help"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+                <span
+                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                >
+                  Total active time spent by the user in this segment. This can
+                  be used alongside the active percentage to gauge how far along
+                  the user is. Too short may indicate they are not fully
+                  engaging with the segment, and too long may indicate they are
+                  stuck or confused.
+                </span>
+              </div>
+            </div>
+            <p class="text-xl sm:text-2xl font-bold text-neutral-900">00h 06m 19s</p>
+          </div>
+
+          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+            <div
+              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+            >
+              <span class="truncate">average % active</span>
+              <div class="relative group ml-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4 text-neutral-500 cursor-help"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+                <span
+                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                >
+                  Percentage of the total time the user has been active.
+                  Activity includes mouse movements, clicks, and keyboard
+                  inputs. Example: If a user had only interacted with the
+                  segment for 2/10 minutes, the active percentage would be 20%.
+                  <br /><br />
+                  Use this with comparison to the segment average to gauge how
+                  actively the user is engaging with the segment. Lesser
+                  activity might indicate confusion or disengagement/idling,
+                  while more activity might indicate active engagement.
+                </span>
+              </div>
+            </div>
+            <p class="text-xl sm:text-2xl font-bold text-neutral-900">48%</p>
+          </div>
+        </div>
+
+        <h3 class="text-base text-neutral-700 text-lg !font-semibold mt-3">
+          Active Players
+        </h3>
 
         <!-- active users in segment -->
         <div
           class="bg-white mt-4 p-4 rounded-lg border border-neutral-300 shadow-sm"
         >
-          <h3 class="text-lg font-semibold text-neutral-800 mb-4">Name Here</h3>
+          <h4 class="text-lg font-semibold text-neutral-800 mb-4">Player Name</h4>
 
           <div
             class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
@@ -135,19 +253,11 @@
                   <span
                     class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
                   >
-                    Average number of actions performed by the user per minute.
-                    This includes mouse movements, clicks, and keyboard inputs.
-                    <br /><br />
-                    Use this with comparison to the segment average to gauge if
-                    how actively the user is engaging with the segment. Too much
-                    activity might indicate confusion, while too little might
-                    indicate disengagement.
-                    <br /><br />
-                    Average for this segment is 🍞 apm.
+                    Segment Average = 🍞
                   </span>
                 </div>
               </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">16.3</p>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">17.8</p>
               <p class="text-base text-neutral-600 mt-1">(more than average)</p>
             </div>
 
@@ -155,7 +265,7 @@
               <div
                 class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
               >
-                <span class="truncate">current time</span>
+                <span class="truncate">current elapsed time</span>
                 <div class="relative group ml-1.5">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -174,20 +284,12 @@
                   <span
                     class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
                   >
-                    Total active time spent by the user in this segment. This
-                    can be used alongside the active percentage to gauge how far
-                    along the user is. Too short may indicate they are not fully
-                    engaging with the segment, and too long may indicate they
-                    are stuck or confused.
-                    <br /><br />
-                    Average for this segment is 🍞.
+                    Segment Average = 🍞
                   </span>
                 </div>
               </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">
-                00h 02m 18s
-              </p>
-              <p class="text-base text-neutral-600 mt-1">(on track)</p>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">00h 08m 57s</p>
+              <p class="text-base text-neutral-600 mt-1">(longer than average)</p>
             </div>
 
             <div class="flex flex-col items-center flex-1 min-w-0 py-2">
@@ -213,23 +315,12 @@
                   <span
                     class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
                   >
-                    Percentage of the total time the user has been active.
-                    Activity includes mouse movements, clicks, and keyboard
-                    inputs. Example: If a user had only interacted with the
-                    segment for 2/10 minutes, the active percentage would be
-                    20%.
-                    <br /><br />
-                    Use this with comparison to the segment average to gauge how
-                    actively the user is engaging with the segment. Lesser
-                    activity might indicate confusion or disengagement/idling,
-                    while more activity might indicate active engagement.
-                    <br /><br />
-                    Average for this segment is 🍞%.
+                    Segment Average = 🍞
                   </span>
                 </div>
               </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">30%</p>
-              <p class="text-base text-neutral-600 mt-1">(more than average)</p>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">23%</p>
+              <p class="text-base text-neutral-600 mt-1">(less than average)</p>
             </div>
           </div>
         </div>
