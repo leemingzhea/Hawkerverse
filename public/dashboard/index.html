@@ -6,6 +6,7 @@
     <title>Hawkerverse Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
+      /* typography declaration and standardisation */
       h1 {
         @apply text-4xl font-bold mb-4 text-neutral-900;
       }
@@ -21,12 +22,13 @@
       nav a {
         @apply no-underline text-blue-300 visited:text-blue-400 hover:text-blue-200 focus:text-blue-100 focus:ring-1 focus:ring-blue-500;
       }
+
+      /* document standardisation */
       body {
         @apply bg-neutral-50 text-neutral-800;
       }
       main > * {
         @apply w-full max-w-5xl;
-        /* @apply border-yellow-400 border-2; */
       }
 
       /* generic card for on background */
@@ -35,14 +37,19 @@
       }
       /* person cell border thing for active users */
       .person {
-        @apply p-2 border-neutral-400 border-1 rounded-md mr-3;
+        @apply p-2 bg-neutral-50 border-neutral-300 border-1 rounded-md mt-2;
+      }
+
+      /* inbetween spacing in case the active user card goes back to a horizontal layout
+      .person {
+        @apply mr-3;
       }
       .person:first-of-type {
         @apply ml-0;
       }
       .person:last-of-type {
         @apply mr-0;
-      }
+      } */
     </style>
   </head>
 
@@ -74,18 +81,27 @@
         <p>
           View currently active users, and their progress.
           <br />
-          <a href="#">Click</a> on a user's name to go to their specific page.
+          Click on a user's name to go to their specific page.
+          <br />
+          Click on a segment name to go to the segment's page.
         </p>
       </header>
 
       <!-- active users -->
       <section class="mt-12 !mb-0 card">
-        <h2 id="active">0 Active Users</h2>
+        <h2 id="active">3 Active Users</h2>
         <ul class="mt-4">
-          <li>
-            <span class="person"> Person 1 </span>
-            <span class="person"> Person 2 </span>
-            <span class="person"> Person 3 </span>
+          <li class="person">
+            <a href="#">Person 1 Name</a> (currently at
+            <a href="#">Segment Name</a>)
+          </li>
+          <li class="person">
+            <a href="#">Person 2 Name</a> (currently at
+            <a href="#">Segment Name</a>)
+          </li>
+          <li class="person">
+            <a href="#">Person 3 Name</a> (currently at
+            <a href="#">Segment Name</a>)
           </li>
         </ul>
       </section>
@@ -175,7 +191,9 @@
                 </span>
               </div>
             </div>
-            <p class="text-xl sm:text-2xl font-bold text-neutral-900">00h 06m 19s</p>
+            <p class="text-xl sm:text-2xl font-bold text-neutral-900">
+              00h 06m 19s
+            </p>
           </div>
 
           <div class="flex flex-col items-center flex-1 min-w-0 py-2">
@@ -225,7 +243,9 @@
         <div
           class="bg-white mt-4 p-4 rounded-lg border border-neutral-300 shadow-sm"
         >
-          <h4 class="text-lg font-semibold text-neutral-800 mb-4">Player Name</h4>
+          <h4 class="text-lg font-semibold text-neutral-800 mb-4">
+            Player Name
+          </h4>
 
           <div
             class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
@@ -288,8 +308,12 @@
                   </span>
                 </div>
               </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">00h 08m 57s</p>
-              <p class="text-base text-neutral-600 mt-1">(longer than average)</p>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">
+                00h 08m 57s
+              </p>
+              <p class="text-base text-neutral-600 mt-1">
+                (longer than average)
+              </p>
             </div>
 
             <div class="flex flex-col items-center flex-1 min-w-0 py-2">
