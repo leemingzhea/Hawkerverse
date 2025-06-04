@@ -1,11 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    dashboard home
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hawkerverse Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      h1 {
+        @apply text-4xl font-bold mb-4 text-neutral-900;
+      }
+      h2 {
+        @apply text-2xl font-semibold mb-3 text-neutral-900;
+      }
+      h3 {
+        @apply text-xl font-medium mb-2 text-neutral-900;
+      }
+      a {
+        @apply text-blue-600 visited:text-blue-700 hover:text-blue-500 focus:text-blue-800 focus:ring-2 focus:ring-blue-300 underline;
+      }
+      nav a {
+        @apply no-underline text-blue-300 visited:text-blue-400 hover:text-blue-200 focus:text-blue-100 focus:ring-1 focus:ring-blue-500;
+      }
+      body {
+        @apply bg-neutral-50 text-neutral-800;
+      }
+      main > * {
+        @apply w-full max-w-5xl;
+        /* @apply border-yellow-400 border-2; */
+      }
+
+      /* generic card for on background */
+      .card {
+        @apply p-4 bg-neutral-100 rounded-lg shadow-md border-neutral-300 border-1 mb-8;
+      }
+      /* person cell border thing for active users */
+      .person {
+        @apply p-2 border-neutral-400 border-1 rounded-md mr-3;
+      }
+      .person:first-of-type {
+        @apply ml-0;
+      }
+      .person:last-of-type {
+        @apply mr-0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- navbar (dark on light bg) -->
+    <nav
+      class="fixed w-full top-0 z-50 bg-neutral-800 text-neutral-200 backdrop-blur-md shadow-md"
+    >
+      <div
+        class="container mx-auto px-6 py-3 flex justify-between items-center w-full max-w-6xl"
+      >
+        <span class="text-xl font-semibold">Hawkerverse</span>
+        <ul class="flex items-center space-x-4">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/dashboard">Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- content -->
+    <main class="min-h-screen flex flex-col items-center pt-24 pb-18 mx-6">
+      <!-- header -->
+      <header>
+        <h1>Dashboard</h1>
+        <p>
+          View currently active users, and their progress.
+          <br />
+          <a href="#">Click</a> on a user's name to go to their specific page.
+        </p>
+      </header>
+
+      <!-- active users -->
+      <section class="mt-12 !mb-0 card">
+        <h2 id="active">0 Active Users</h2>
+        <ul class="mt-4">
+          <li>
+            <span class="person"> Person 1 </span>
+            <span class="person"> Person 2 </span>
+            <span class="person"> Person 3 </span>
+          </li>
+        </ul>
+      </section>
+
+      <hr class="mt-12 mb-12 border-neutral-400" />
+
+      <!-- segment -->
+      <section
+        class="bg-white p-4 border-2 border-neutral-300 rounded-2xl shadow-lg mb-8"
+      >
+        <div class="flex justify-between items-start mb-2">
+          <h2 class="text-2xl font-semibold text-neutral-900">Module 1</h2>
+          <p class="text-base text-neutral-600 pt-1">avg. 5m 20s</p>
+        </div>
+
+        <p class="text-base text-neutral-700 text-lg">Currently Active</p>
+
+        <!-- active users in segment -->
+        <div
+          class="bg-white mt-4 p-4 rounded-lg border border-neutral-300 shadow-sm"
+        >
+          <h3 class="text-lg font-semibold text-neutral-800 mb-4">Name Here</h3>
+
+          <div
+            class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
+          >
+            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+              <div
+                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+              >
+                <span class="truncate">actions/min</span>
+                <div class="relative group ml-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 text-neutral-500 cursor-help"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                    />
+                  </svg>
+                  <span
+                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  >
+                    Average number of actions performed by the user per minute.
+                    This includes mouse movements, clicks, and keyboard inputs.
+                    <br /><br />
+                    Use this with comparison to the segment average to gauge if
+                    how actively the user is engaging with the segment. Too much
+                    activity might indicate confusion, while too little might
+                    indicate disengagement.
+                    <br /><br />
+                    Average for this segment is 🍞 apm.
+                  </span>
+                </div>
+              </div>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">16.3</p>
+              <p class="text-base text-neutral-600 mt-1">(more than average)</p>
+            </div>
+
+            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+              <div
+                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+              >
+                <span class="truncate">current time</span>
+                <div class="relative group ml-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 text-neutral-500 cursor-help"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                    />
+                  </svg>
+                  <span
+                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  >
+                    Total active time spent by the user in this segment. This
+                    can be used alongside the active percentage to gauge how far
+                    along the user is. Too short may indicate they are not fully
+                    engaging with the segment, and too long may indicate they
+                    are stuck or confused.
+                    <br /><br />
+                    Average for this segment is 🍞.
+                  </span>
+                </div>
+              </div>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">
+                00h 02m 18s
+              </p>
+              <p class="text-base text-neutral-600 mt-1">(on track)</p>
+            </div>
+
+            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+              <div
+                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
+              >
+                <span class="truncate">% active</span>
+                <div class="relative group ml-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4 text-neutral-500 cursor-help"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                    />
+                  </svg>
+                  <span
+                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  >
+                    Percentage of the total time the user has been active.
+                    Activity includes mouse movements, clicks, and keyboard
+                    inputs. Example: If a user had only interacted with the
+                    segment for 2/10 minutes, the active percentage would be
+                    20%.
+                    <br /><br />
+                    Use this with comparison to the segment average to gauge how
+                    actively the user is engaging with the segment. Lesser
+                    activity might indicate confusion or disengagement/idling,
+                    while more activity might indicate active engagement.
+                    <br /><br />
+                    Average for this segment is 🍞%.
+                  </span>
+                </div>
+              </div>
+              <p class="text-xl sm:text-2xl font-bold text-neutral-900">30%</p>
+              <p class="text-base text-neutral-600 mt-1">(more than average)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
