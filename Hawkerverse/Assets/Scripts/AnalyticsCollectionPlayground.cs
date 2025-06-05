@@ -71,6 +71,11 @@ public class AnalyticsCollectionPlayground : MonoBehaviour
         {
             Debug.Log("playground mouse actuated");
         }
+
+        if (Mouse.current.delta.ReadValue().sqrMagnitude > 0)
+        {
+            Debug.Log("playground mouse movement");
+        }
     }
 }
 
