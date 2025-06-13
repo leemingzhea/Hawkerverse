@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "496063155018",
+    "firebase_url": "https://imetend-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "imetend",
+    "storage_bucket": "imetend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496063155018:android:186631ebdada073822cfb3",
+        "android_client_info": {
+          "package_name": "com.imetend.fm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496063155018-351l5s6mmnu9cp3ea8kn9ciq32jqs7vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnVrE1-LYFy0EgbTJvYtN-o2i6mp9pD2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496063155018-351l5s6mmnu9cp3ea8kn9ciq32jqs7vc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496063155018-6410amg4eh15kacdjdcmrdkg5vm4l582.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.imetend.fm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
