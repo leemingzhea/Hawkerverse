@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Menu.unity
     guid: 1b1a93b6dcc5f6e408bac2de5a446591
   - enabled: 1
+    path: Assets/Scenes/Introduction.unity
+    guid: 6b0a0e5d954e691479bb47934fa51d7d
+  - enabled: 1
     path: Assets/Scenes/Hawkerverse.unity
     guid: 1ca82ac5183a74646976d29b08b82287
   m_configObjects: {}
