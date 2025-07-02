@@ -174,7 +174,7 @@
           return null;
         }
       }
-      
+
       // Function to check if a user is currently active (data is changing over time)
       function isUserCurrentlyActive(userId, currentUserData, activityName) {
         if (!currentUserData) {
@@ -330,7 +330,7 @@
               orderedActivities.push(activityName);
             }
           });
-          
+
           // Update active users count - only count users whose data is changing
           const totalActiveUsers = new Set();
           Object.entries(activities).forEach(([activityName, activity]) => {
@@ -358,7 +358,7 @@
             console.error("HR element not found");
             return;
           }
-          
+
           // Remove existing segment sections (only those after the HR, but not the inactive users section)
           let next = hrElement.nextElementSibling;
           while (
@@ -370,7 +370,7 @@
             next = toRemove.nextElementSibling;
             toRemove.remove();
           }
-          
+
           // Create segments for each activity
           const allSectionsHtml = orderedActivities
             .map((activityName) => {
@@ -676,20 +676,31 @@
             }
           });
         });
-
-        // Collect all users and their last known segments
+        
+        // Collect all users and their last known segments based on started_at_epoch
         const allUserSegments = {};
         Object.entries(activities).forEach(([activityName, userMap]) => {
           Object.entries(userMap).forEach(([userId, userData]) => {
-            allUserSegments[userId] = activityName;
+            const startedAt = userData.started_at_epoch || 0;
+
+            // If this user doesn't exist yet, or this segment has a more recent started_at_epoch
+            if (
+              !allUserSegments[userId] ||
+              startedAt > allUserSegments[userId].startedAt
+            ) {
+              allUserSegments[userId] = {
+                segment: activityName,
+                startedAt: startedAt,
+              };
+            }
           });
         });
-
+        
         // Inactive users = all users - active users
         const inactiveUserSegments = {};
-        Object.entries(allUserSegments).forEach(([userId, segment]) => {
+        Object.entries(allUserSegments).forEach(([userId, segmentData]) => {
           if (!activeUsers.has(userId)) {
-            inactiveUserSegments[userId] = segment;
+            inactiveUserSegments[userId] = segmentData.segment;
           }
         });
 
@@ -700,7 +711,7 @@
             Object.keys(inactiveUserSegments).length
           } Inactive Users`;
         }
-        
+
         // Build list items for inactive users
         const inactiveUsersList = Object.entries(inactiveUserSegments)
           .map(([userId, segment]) => {
@@ -750,6 +761,7 @@
           return;
         }
         console.log("DOM ready, setting up real-time listener...");
+        
         // Set up real-time listener
         const dbRef = ref(database);
         onValue(
