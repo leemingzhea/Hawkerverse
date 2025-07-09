@@ -9,7 +9,7 @@ public class PickUpScript : MonoBehaviour
     public Transform holdPos;
     public float throwForce = 500f;
     public float pickUpRange = 5f;
-    public TextMeshProUGUI grabEText;
+    public GameObject grabEText;
 
     private GameObject heldObj;
     private Rigidbody heldObjRb;
