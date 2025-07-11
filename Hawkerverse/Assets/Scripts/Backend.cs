@@ -7,9 +7,14 @@ using Firebase.Database;
 using Firebase.Extensions;
 using UnityEngine;
 using UnityEngine.Serialization;
+using System.Security.Cryptography;
+using System.Text;
 
 public class Backend
 {
+    // --- minimal class implementation from sota staircase projects and ColourMeOK ---
+    // https://forge.joshwel.co/mark/colourmeok/src/branch/main/ColourMeOKGame/Assets/Scripts/Backend.cs
+    
     /// <summary>
     ///     enum for the result of the authentication process
     /// </summary>
@@ -302,12 +307,175 @@ public class Backend
     //     return _username;
     // }
 
-
     /// <summary>
     ///     abstraction function to sign out the user
     /// </summary>
     public void SignOutUser()
     {
         _auth.SignOut();
+    }
+    
+    // --- game-specific functions below this line ---
+    
+    // FOR CALLBACK-BASED DATABASE SETTER FUNCTION REFERENCE:
+    // /// <summary>
+    // ///     abstraction function to update the user's rating in the database
+    // /// </summary>
+    // /// <param name="callback">callback function that takes in a <c>TransactionResult</c> enum </param>
+    // public void UpdateUserRating(
+    //     Action<TransactionResult> callback)
+    // {
+    //     if (!Status.Equals(FirebaseConnectionStatus.Connected)) return;
+    //
+    //     if (_user == null)
+    //     {
+    //         callback(TransactionResult.Unauthenticated);
+    //         return;
+    //     }
+    //
+    //     var userRating = GameManager.Instance.Data.CalculateUserRating();
+    //
+    //     _db.Child("users")
+    //         .Child(_user.UserId)
+    //         .Child("rating")
+    //         .SetValueAsync(userRating)
+    //         .ContinueWithOnMainThread(task =>
+    //         {
+    //             if (task.IsCompletedSuccessfully)
+    //             {
+    //                 Debug.Log($"updated online user rating to {userRating}");
+    //                 callback(TransactionResult.Ok);
+    //             }
+    //             else
+    //             {
+    //                 Debug.LogError(task.Exception);
+    //                 callback(TransactionResult.Error);
+    //             }
+    //         });
+    // }
+    //
+    // FOR CALLBACK-BASED DATABASE GETTER FUNCTION REFERENCE:
+    // /// <summary>
+    // ///     abstraction function to get the leaderboard from the database
+    // /// </summary>
+    // /// <param name="callback">
+    // ///     callback function that takes in a <c>TransactionResult</c> enum and a <c>List&lt;LeaderboardEntry&gt;</c>
+    // /// </param>
+    // public void GetLeaderboard(
+    //     Action<TransactionResult, List<LeaderboardEntry>> callback)
+    // {
+    //     Debug.Log("getting leaderboard");
+    //
+    //     _db.Child("users")
+    //         .OrderByChild("rating")
+    //         .LimitToLast(LeaderboardUI.MaxEntries)
+    //         .GetValueAsync()
+    //         .ContinueWithOnMainThread(task =>
+    //         {
+    //             if (!task.IsCompletedSuccessfully)
+    //             {
+    //                 Debug.LogError(task.Exception);
+    //                 callback(TransactionResult.Error, new List<LeaderboardEntry>(0));
+    //                 return;
+    //             }
+    //
+    //             var entries = new List<LeaderboardEntry>();
+    //             foreach (var child in task.Result.Children)
+    //                 try
+    //                 {
+    //                     var entry = new LeaderboardEntry(child.Value as Dictionary<string, object>);
+    //                     entries.Add(entry);
+    //                 }
+    //                 catch (Exception e)
+    //                 {
+    //                     Debug.LogError(e);
+    //                 }
+    //
+    //             callback(TransactionResult.Ok, entries);
+    //         });
+    // }
+    
+    // NOTE: the below name-based jank is because for the sake of time
+    //       we should not implement sign in and auth logic.
+    //
+    //       because we either get each user to sign in through firebase auth,
+    //       or we just have a name input box
+    //
+    //       so during the prototype showcase, type in the same name
+    //       (or modify the SetUserActivityStatistics function to use the
+    //       firebase username as the display name and their uid as the sanitised name)
+    
+#if UNITY_EDITOR
+    [HelpBox(
+        "Set this name to anything but default programatically with Backend.SetName, " +
+        "for sake of the game being a prototype just have a text input box in the beginning for them to input! " +
+        "(The SetName function helps reasonably reproducibly a sanitised name identifier)",
+        HelpBoxMessageType.Warning)]
+    [Space(10)]
+#endif
+    [SerializeField] private string _userDisplayName = "Default";
+    
+    private string _userPhonyID = ToFirebaseCompatibleId("DEFAULT");
+
+    private static string ToFirebaseCompatibleId(string input)
+    {
+        // Use SHA-256 for good collision resistance
+        using var sha = SHA256.Create();
+        var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+        
+        // Use Base64 URL-safe encoding (Firebase-safe characters)
+        var base64 = Convert.ToBase64String(hash)
+            .Replace('+', '-')
+            .Replace('/', '_')
+            .Replace("=", "");
+        
+        // Truncate to exactly 28 characters
+        return base64[..28];
+    }
+
+    /// <summary>
+    ///     use this function to set the user's name
+    /// </summary>
+    /// <param name="name">
+    ///     the name to set for the user as their display name, taken from a text input box or similar
+    /// </param>
+    public void SetName(string name)
+    {
+        _userDisplayName = name;
+        _userPhonyID = ToFirebaseCompatibleId(name.ToUpper().Replace(" ", ""));
+    }
+
+    public void UpdateUserActivityStatistics(string activityName, ActivityStatistics statistics, Action<TransactionResult> callback)
+    {
+        if (!status.Equals(FirebaseConnectionStatus.Connected)) return;
+
+        if (string.IsNullOrEmpty(_userPhonyID))
+        {
+            callback(TransactionResult.Unauthenticated);
+            return;
+        }
+
+        var activityStats = new Dictionary<string, object>
+        {
+            { "running_time_idle", statistics.runningTimeIdle },
+            { "running_time_active", statistics.runningTimeActive },
+            { "actions_taken", statistics.totalActionsTaken },
+            { "started_at_epoch", statistics.startedAtEpoch }
+        };
+
+        var userNameTask = _db.Child("users")
+            .Child(_userPhonyID)
+            .Child("name")
+            .SetValueAsync(_userDisplayName);
+
+        var activityStatsTask = _db.Child("activity")
+            .Child(activityName)
+            .Child(_userPhonyID)
+            .SetValueAsync(activityStats);
+
+        Task.WhenAll(userNameTask, activityStatsTask).ContinueWithOnMainThread(task =>
+        {
+            callback(task.IsCompletedSuccessfully ? TransactionResult.Ok : TransactionResult.Error);
+        });
     }
 }

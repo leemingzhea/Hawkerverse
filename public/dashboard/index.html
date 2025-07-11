@@ -74,7 +74,7 @@
     </nav>
 
     <!-- content -->
-    <main class="min-h-screen flex flex-col items-center pt-24 pb-18 mx-6">
+    <main class="min-h-screen flex flex-col items-center pt-24 mx-6">
       <!-- header -->
       <header>
         <h1>Dashboard</h1>
@@ -88,7 +88,7 @@
       </header>
 
       <!-- active users -->
-      <section class="mt-12 !mb-0 card">
+      <section id="active-users-section" class="mt-12 !mb-0 card">
         <h2 id="active">3 Active Users</h2>
         <ul class="mt-4">
           <li class="person">
@@ -105,250 +105,710 @@
           </li>
         </ul>
       </section>
-
       <hr class="mt-12 mb-12 border-neutral-400" />
-
-      <!-- segment -->
-      <section
-        class="bg-white p-4 border-2 border-neutral-200 rounded-2xl shadow-lg mb-8"
-      >
-        <!-- segment name -->
-        <div class="flex justify-between items-start mb-2">
-          <h2 class="text-2xl font-semibold text-neutral-900">Segment Name</h2>
-        </div>
-
-        <h3 class="text-base text-neutral-700 text-lg !font-semibold">
-          Average Statistics
-        </h3>
-
-        <div
-          class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
-        >
-          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-            <div
-              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-            >
-              <span class="truncate">avg. actions/min</span>
-              <div class="relative group ml-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4 text-neutral-500 cursor-help"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                  />
-                </svg>
-                <span
-                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                >
-                  Average number of actions performed by the user per minute.
-                  This includes mouse movements, clicks, and keyboard inputs.
-                  <br /><br />
-                  Use this with comparison to the segment average to gauge if
-                  how actively the user is engaging with the segment. Too much
-                  activity might indicate confusion, while too little might
-                  indicate disengagement.
-                </span>
-              </div>
-            </div>
-            <p class="text-xl sm:text-2xl font-bold text-neutral-900">16.3</p>
-          </div>
-
-          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-            <div
-              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-            >
-              <span class="truncate">average time taken</span>
-              <div class="relative group ml-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4 text-neutral-500 cursor-help"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                  />
-                </svg>
-                <span
-                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                >
-                  Total active time spent by the user in this segment. This can
-                  be used alongside the active percentage to gauge how far along
-                  the user is. Too short may indicate they are not fully
-                  engaging with the segment, and too long may indicate they are
-                  stuck or confused.
-                </span>
-              </div>
-            </div>
-            <p class="text-xl sm:text-2xl font-bold text-neutral-900">
-              00h 06m 19s
-            </p>
-          </div>
-
-          <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-            <div
-              class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-            >
-              <span class="truncate">average % active</span>
-              <div class="relative group ml-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4 text-neutral-500 cursor-help"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                  />
-                </svg>
-                <span
-                  class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                >
-                  Percentage of the total time the user has been active.
-                  Activity includes mouse movements, clicks, and keyboard
-                  inputs. Example: If a user had only interacted with the
-                  segment for 2/10 minutes, the active percentage would be 20%.
-                  <br /><br />
-                  Use this with comparison to the segment average to gauge how
-                  actively the user is engaging with the segment. Lesser
-                  activity might indicate confusion or disengagement/idling,
-                  while more activity might indicate active engagement.
-                </span>
-              </div>
-            </div>
-            <p class="text-xl sm:text-2xl font-bold text-neutral-900">48%</p>
-          </div>
-        </div>
-
-        <h3 class="text-base text-neutral-700 text-lg !font-semibold mt-3">
-          Active Players
-        </h3>
-
-        <!-- active users in segment -->
-        <div
-          class="bg-white mt-4 p-4 rounded-lg border border-neutral-300 shadow-sm"
-        >
-          <h4 class="text-lg font-semibold text-neutral-800 mb-4">
-            Player Name
-          </h4>
-
-          <div
-            class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3"
-          >
-            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-              <div
-                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-              >
-                <span class="truncate">actions/min</span>
-                <div class="relative group ml-1.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-4 h-4 text-neutral-500 cursor-help"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                    />
-                  </svg>
-                  <span
-                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                  >
-                    Segment Average = 🍞
-                  </span>
-                </div>
-              </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">17.8</p>
-              <p class="text-base text-neutral-600 mt-1">(more than average)</p>
-            </div>
-
-            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-              <div
-                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-              >
-                <span class="truncate">current elapsed time</span>
-                <div class="relative group ml-1.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-4 h-4 text-neutral-500 cursor-help"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                    />
-                  </svg>
-                  <span
-                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                  >
-                    Segment Average = 🍞
-                  </span>
-                </div>
-              </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">
-                00h 08m 57s
-              </p>
-              <p class="text-base text-neutral-600 mt-1">
-                (longer than average)
-              </p>
-            </div>
-
-            <div class="flex flex-col items-center flex-1 min-w-0 py-2">
-              <div
-                class="flex items-center justify-center text-base text-neutral-600 mb-1.5"
-              >
-                <span class="truncate">% active</span>
-                <div class="relative group ml-1.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-4 h-4 text-neutral-500 cursor-help"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-                    />
-                  </svg>
-                  <span
-                    class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
-                  >
-                    Segment Average = 🍞
-                  </span>
-                </div>
-              </div>
-              <p class="text-xl sm:text-2xl font-bold text-neutral-900">23%</p>
-              <p class="text-base text-neutral-600 mt-1">(less than average)</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
+
+    <!-- separator before inactive users -->
+    <hr class="mt-6 mb-12 border-neutral-400 mx-6 max-w-5xl mx-auto" />
+
+    <!-- inactive users section - placed outside main to avoid being removed -->
+    <section id="inactive-users-section" class="card mx-6 max-w-5xl mx-auto">
+      <h2 id="inactive">0 Inactive Users</h2>
+      <ul class="mt-4" id="inactive-users-list">
+        <!-- Inactive users will be populated here -->
+      </ul>
+    </section>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+      import {
+        getDatabase,
+        ref,
+        get,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAzEYkvWhcXTDuCR3xclylYBDbbj5-sao8",
+        authDomain: "imetend.firebaseapp.com",
+        databaseURL:
+          "https://imetend-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "imetend",
+        storageBucket: "imetend.firebasestorage.app",
+        messagingSenderId: "496063155018",
+        appId: "1:496063155018:web:9dd848a81536ac9322cfb3",
+      }; // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app); // Store previous data snapshots to detect changes
+      let previousDataSnapshot = null;
+      let lastUpdateTimestamp = {};
+      let currentDbData = null; // Store current data for periodic checks
+
+      // NOTE: / IMPORTANT:
+      // Predefined order for activities/segments (preferred order)
+      // (basically what segment keys/names to show first and in what order)
+      const preferredActivityOrder = [
+        "ConnectionDemo3",
+        "ConnectionDemo2",
+        "ConnectionDemo1",
+      ];
+
+      // Function to retrieve the entire database
+      async function retrieveDatabase() {
+        try {
+          const dbRef = ref(database);
+          const snapshot = await get(dbRef);
+
+          if (snapshot.exists()) {
+            return snapshot.val();
+          } else {
+            console.log("No data available");
+            return null;
+          }
+        } catch (error) {
+          console.error("Error retrieving database:", error);
+          return null;
+        }
+      }
+
+      // Function to check if a user is currently active (data is changing over time)
+      function isUserCurrentlyActive(userId, currentUserData, activityName) {
+        if (!currentUserData) {
+          return false;
+        }
+
+        if (!previousDataSnapshot) {
+          // If no previous data, consider them inactive until we have comparison data
+          return false;
+        }
+
+        // Check if this user existed in the previous snapshot for this activity
+        const previousActivityData =
+          previousDataSnapshot.activity?.[activityName];
+        const previousUserData = previousActivityData?.[userId];
+
+        if (!previousUserData) {
+          // New user since last snapshot - they're active, record the timestamp
+          const userKey = `${activityName}_${userId}`;
+          lastUpdateTimestamp[userKey] = Date.now();
+          return true;
+        }
+
+        // Compare current data with previous data to detect changes
+        const currentActiveTime = currentUserData.running_time_active || 0;
+        const currentIdleTime = currentUserData.running_time_idle || 0;
+        const currentActions = currentUserData.actions_taken || 0;
+
+        const previousActiveTime = previousUserData.running_time_active || 0;
+        const previousIdleTime = previousUserData.running_time_idle || 0;
+        const previousActions = previousUserData.actions_taken || 0;
+
+        // Check if any metrics have increased
+        const hasDataChanged =
+          currentActiveTime > previousActiveTime ||
+          currentIdleTime > previousIdleTime ||
+          currentActions > previousActions;
+
+        const userKey = `${activityName}_${userId}`;
+        const now = Date.now();
+
+        if (hasDataChanged) {
+          // Data has changed, update timestamp and consider them active
+          lastUpdateTimestamp[userKey] = now;
+          return true;
+        } else {
+          // Data hasn't changed, check if it's been more than 10 seconds since last update
+          const lastUpdate = lastUpdateTimestamp[userKey];
+          if (!lastUpdate) {
+            // No previous timestamp recorded, consider them inactive
+            return false;
+          }
+
+          const timeSinceLastUpdate = now - lastUpdate;
+          const TEN_SECONDS = 10 * 1000; // 10 seconds in milliseconds
+
+          // User is inactive if more than 10 seconds have passed without data changes
+          return timeSinceLastUpdate < TEN_SECONDS;
+        }
+      }
+
+      // Function to calculate statistics for an activity
+      function calculateActivityStats(activityData, activityName) {
+        // Calculate averages from ALL users in the segment
+        const allUsers = Object.keys(activityData);
+        let totalActiveTime = 0;
+        let totalIdleTime = 0;
+        let sumActionsPerMin = 0;
+        let sumActivePercentage = 0;
+
+        allUsers.forEach((userId) => {
+          const userData = activityData[userId];
+          const activeTime = userData.running_time_active || 0;
+          const idleTime = userData.running_time_idle || 0;
+          const totalUserTime = activeTime + idleTime;
+          const actions = userData.actions_taken || 0;
+
+          // Calculate per-user stats
+          const userActionsPerMin =
+            totalUserTime > 0 ? actions / (totalUserTime / 60) : 0;
+          const userActivePercentage =
+            totalUserTime > 0 ? (activeTime / totalUserTime) * 100 : 0;
+
+          // Add to sums for averaging
+          sumActionsPerMin += userActionsPerMin;
+          sumActivePercentage += userActivePercentage;
+
+          // Still track totals for avgTotalTime calculation
+          totalActiveTime += activeTime;
+          totalIdleTime += idleTime;
+        });
+
+        // Calculate averages based on ALL users
+        const totalTime = totalActiveTime + totalIdleTime;
+        const avgActivePercentage =
+          allUsers.length > 0 ? sumActivePercentage / allUsers.length : 0;
+        const avgActionsPerMin =
+          allUsers.length > 0 ? sumActionsPerMin / allUsers.length : 0;
+        const avgTotalTime =
+          allUsers.length > 0 ? totalTime / allUsers.length : 0;
+
+        // Count only currently active users for display purposes
+        const activeUsers = Object.entries(activityData).filter(
+          ([userId, userData]) =>
+            isUserCurrentlyActive(userId, userData, activityName)
+        );
+
+        return {
+          userCount: activeUsers.length, // Only active users count
+          totalUserCount: allUsers.length, // Total users in segment
+          avgActivePercentage: Math.round(avgActivePercentage),
+          avgActionsPerMin: Math.round(avgActionsPerMin * 10) / 10,
+          avgTotalTime: avgTotalTime,
+          users: activeUsers.map(([userId]) => userId),
+        };
+      }
+
+      // Function to format time duration
+      function formatDuration(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${hours.toString().padStart(2, "0")}h ${mins
+          .toString()
+          .padStart(2, "0")}m ${secs.toString().padStart(2, "0")}s`;
+      }
+
+      // Function to render activities in preferred order
+      function renderActivities(dbData) {
+        try {
+          if (!dbData || !dbData.activity || !dbData.users) {
+            console.log("No activity or user data found");
+            return;
+          }
+
+          const activities = dbData.activity;
+          const users = dbData.users;
+          const activityNames = Object.keys(activities);
+
+          // Sort activities: preferred order first, then remaining ones
+          const orderedActivities = [];
+
+          // Add preferred activities in order
+          preferredActivityOrder.forEach((preferredName) => {
+            if (activityNames.includes(preferredName)) {
+              orderedActivities.push(preferredName);
+            }
+          });
+
+          // Add remaining activities
+          activityNames.forEach((activityName) => {
+            if (!preferredActivityOrder.includes(activityName)) {
+              orderedActivities.push(activityName);
+            }
+          });
+
+          // Update active users count - only count users whose data is changing
+          const totalActiveUsers = new Set();
+          Object.entries(activities).forEach(([activityName, activity]) => {
+            Object.entries(activity).forEach(([userId, userData]) => {
+              if (isUserCurrentlyActive(userId, userData, activityName)) {
+                totalActiveUsers.add(userId);
+              }
+            });
+          });
+
+          const activeElement = document.getElementById("active");
+          if (activeElement) {
+            activeElement.textContent = `${totalActiveUsers.size} Active Users`;
+          }
+
+          // Find the main container where we'll insert segments
+          const main = document.querySelector("main");
+          if (!main) {
+            console.error("Main element not found");
+            return;
+          }
+
+          const hrElement = main.querySelector("hr");
+          if (!hrElement) {
+            console.error("HR element not found");
+            return;
+          }
+
+          // Remove existing segment sections (only those after the HR, but not the inactive users section)
+          let next = hrElement.nextElementSibling;
+          while (
+            next &&
+            next.tagName === "SECTION" &&
+            next.id !== "inactive-users-section"
+          ) {
+            const toRemove = next;
+            next = toRemove.nextElementSibling;
+            toRemove.remove();
+          }
+
+          // Create segments for each activity
+          const allSectionsHtml = orderedActivities
+            .map((activityName) => {
+              try {
+                const activityData = activities[activityName];
+                const stats = calculateActivityStats(
+                  activityData,
+                  activityName
+                );
+
+                return createActivitySection(
+                  activityName,
+                  stats,
+                  activityData,
+                  users
+                );
+              } catch (error) {
+                console.error(
+                  `Error creating section for activity ${activityName}:`,
+                  error
+                );
+                return "";
+              }
+            })
+            .join("");
+
+          // Insert all sections after the HR element at once
+          hrElement.insertAdjacentHTML("afterend", allSectionsHtml);
+        } catch (error) {
+          console.error("Error in renderActivities:", error);
+        }
+      }
+
+      // Function to create HTML for an activity section
+      function createActivitySection(activityName, stats, activityData, users) {
+        const activityId = activityName
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "-");
+
+        return `
+          <section id="${activityId}" class="bg-white p-4 border-2 border-neutral-200 rounded-2xl shadow-lg mb-8">            <!-- segment name -->
+            <div class="flex justify-between items-start mb-2">
+              <h2 class="text-2xl font-semibold text-neutral-900">
+                ${activityName}
+              </h2>
+            </div>
+
+            <h3 class="text-base text-neutral-700 text-lg !font-semibold">
+              Average Statistics
+            </h3>
+
+            <div class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3">
+              <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                  <span class="truncate">avg. actions/min</span>
+                  <div class="relative group ml-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>                    <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      Average number of actions performed by the user per minute.
+                      This includes mouse movements, clicks, and keyboard inputs.
+                      <br /><br />
+                      Use this with comparison to the segment average to gauge if
+                      how actively the user is engaging with the segment. Too much
+                      activity might indicate confusion, while too little might
+                      indicate disengagement.
+                    </span>
+                  </div>
+                </div>
+                <p class="text-xl sm:text-2xl font-bold text-neutral-900">${
+                  stats.avgActionsPerMin
+                }</p>
+              </div>
+
+              <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                  <span class="truncate">average time taken</span>
+                  <div class="relative group ml-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>                    <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      Total active time spent by the user in this segment. This can
+                      be used alongside the active percentage to gauge how far along
+                      the user is. Too short may indicate they are not fully
+                      engaging with the segment, and too long may indicate they are
+                      stuck or confused.
+                    </span>
+                  </div>
+                </div>
+                <p class="text-xl sm:text-2xl font-bold text-neutral-900">${formatDuration(
+                  stats.avgTotalTime
+                )}</p>
+              </div>
+
+              <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                  <span class="truncate">average % active</span>
+                  <div class="relative group ml-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                    </svg>                    <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                      Percentage of the total time the user has been active.
+                      Activity includes mouse movements, clicks, and keyboard
+                      inputs. Example: If a user had only interacted with the
+                      segment for 2/10 minutes, the active percentage would be 20%.
+                      <br /><br />
+                      Use this with comparison to the segment average to gauge how
+                      actively the user is engaging with the segment. Lesser
+                      activity might indicate confusion or disengagement/idling,
+                      while more activity might indicate active engagement.
+                    </span>
+                  </div>
+                </div>
+                <p class="text-xl sm:text-2xl font-bold text-neutral-900">${
+                  stats.avgActivePercentage
+                }%</p>
+              </div>            </div>            ${
+                stats.userCount > 0
+                  ? `<h3 class="text-base text-neutral-700 text-lg !font-semibold mt-3">
+              Active Players (${stats.userCount} of ${stats.totalUserCount})
+            </h3>${createUserCards(activityData, users, stats, activityName)}`
+                  : ""
+              }
+          </section>
+        `;
+      }
+
+      // Function to create user cards for an activity
+      function createUserCards(
+        activityData,
+        users,
+        activityStats,
+        activityName
+      ) {
+        return Object.entries(activityData)
+          .filter(([userId, userData]) =>
+            isUserCurrentlyActive(userId, userData, activityName)
+          )
+          .map(([userId, userData]) => {
+            const userName = users[userId]?.name || `User ${userId}`;
+            const totalTime =
+              (userData.running_time_active || 0) +
+              (userData.running_time_idle || 0);
+            const activePercentage =
+              totalTime > 0
+                ? Math.round(
+                    ((userData.running_time_active || 0) / totalTime) * 100
+                  )
+                : 0;
+            const actionsPerMin =
+              totalTime > 0
+                ? Math.round(
+                    ((userData.actions_taken || 0) / (totalTime / 60)) * 10
+                  ) / 10
+                : 0;
+
+            // Compare to averages
+            const actionsComparison =
+              actionsPerMin > activityStats.avgActionsPerMin
+                ? "more than average"
+                : actionsPerMin < activityStats.avgActionsPerMin
+                ? "less than average"
+                : "average";
+            const timeComparison =
+              totalTime > activityStats.avgTotalTime
+                ? "longer than average"
+                : totalTime < activityStats.avgTotalTime
+                ? "shorter than average"
+                : "average";
+            const activeComparison =
+              activePercentage > activityStats.avgActivePercentage
+                ? "more than average"
+                : activePercentage < activityStats.avgActivePercentage
+                ? "less than average"
+                : "average";
+
+            return `
+            <div class="bg-white mt-4 p-4 rounded-lg border border-neutral-300 shadow-sm">
+              <h4 class="text-lg font-semibold text-neutral-800 mb-4">
+                <a href="user.html?id=${userId}" class="text-blue-600 hover:text-blue-500">${userName}</a>
+              </h4>              <div class="flex flex-col sm:flex-row justify-around items-stretch text-center space-y-4 sm:space-y-0 sm:space-x-3">
+                <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                  <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                    <span class="truncate">actions/min</span>
+                    <div class="relative group ml-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                      </svg>
+                      <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Segment Average = ${activityStats.avgActionsPerMin}
+                      </span>
+                    </div>
+                  </div>
+                  <p class="text-xl sm:text-2xl font-bold text-neutral-900">${actionsPerMin}</p>
+                  <p class="text-base text-neutral-600 mt-1">(${actionsComparison})</p>
+                </div>
+
+                <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                  <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                    <span class="truncate">current elapsed time</span>
+                    <div class="relative group ml-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                      </svg>
+                      <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Segment Average = ${formatDuration(
+                          activityStats.avgTotalTime
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <p class="text-xl sm:text-2xl font-bold text-neutral-900">${formatDuration(
+                    totalTime
+                  )}</p>
+                  <p class="text-base text-neutral-600 mt-1">(${timeComparison})</p>
+                </div>
+
+                <div class="flex flex-col items-center flex-1 min-w-0 py-2">
+                  <div class="flex items-center justify-center text-base text-neutral-600 mb-1.5">
+                    <span class="truncate">% active</span>
+                    <div class="relative group ml-1.5">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-neutral-500 cursor-help">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                      </svg>
+                      <span class="absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 w-max max-w-xs bg-neutral-800 text-white text-base rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                        Segment Average = ${activityStats.avgActivePercentage}%
+                      </span>
+                    </div>
+                  </div>
+                  <p class="text-xl sm:text-2xl font-bold text-neutral-900">${activePercentage}%</p>
+                  <p class="text-base text-neutral-600 mt-1">(${activeComparison})</p>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      // Function to update active users list
+      function updateActiveUsersList(dbData) {
+        if (!dbData || !dbData.activity || !dbData.users) return;
+
+        const activities = dbData.activity;
+        const users = dbData.users;
+
+        // Collect each user's current segment, but only if they're actively changing
+        const activeUserSegments = {};
+        Object.entries(activities).forEach(([activityName, userMap]) => {
+          Object.entries(userMap).forEach(([userId, userData]) => {
+            if (isUserCurrentlyActive(userId, userData, activityName)) {
+              activeUserSegments[userId] = activityName;
+            }
+          });
+        });
+
+        // Build list items
+        const activeUsersList = Object.entries(activeUserSegments)
+          .map(([userId, segment]) => {
+            const userName = users[userId]?.name || `User ${userId}`;
+            const segmentId = segment.toLowerCase().replace(/[^a-z0-9]/g, "-");
+            return `
+            <li class="person">
+              <a href="user.html?id=${userId}">${userName}</a> (currently at
+              <a href="#${segmentId}">${segment}</a>)
+            </li>
+            `;
+          })
+          .join("");
+
+        // Update the active users section by ID
+        const section = document.getElementById("active-users-section");
+        if (!section) {
+          console.warn("Active users section not found");
+          return;
+        }
+        const usersList = section.querySelector("ul");
+        if (usersList) {
+          if (activeUsersList) {
+            usersList.innerHTML = activeUsersList;
+          } else {
+            usersList.innerHTML =
+              '<li class="person text-neutral-500">No users currently active</li>';
+          }
+        } else {
+          console.warn("Users list element not found");
+        }
+      }
+
+      // Function to update inactive users list
+      function updateInactiveUsersList(dbData) {
+        if (!dbData || !dbData.activity || !dbData.users) return;
+
+        const activities = dbData.activity;
+        const users = dbData.users;
+
+        // First, collect all active users
+        const activeUsers = new Set();
+        Object.entries(activities).forEach(([activityName, userMap]) => {
+          Object.entries(userMap).forEach(([userId, userData]) => {
+            if (isUserCurrentlyActive(userId, userData, activityName)) {
+              activeUsers.add(userId);
+            }
+          });
+        });
+        
+        // Collect all users and their last known segments based on started_at_epoch
+        const allUserSegments = {};
+        Object.entries(activities).forEach(([activityName, userMap]) => {
+          Object.entries(userMap).forEach(([userId, userData]) => {
+            const startedAt = userData.started_at_epoch || 0;
+
+            // If this user doesn't exist yet, or this segment has a more recent started_at_epoch
+            if (
+              !allUserSegments[userId] ||
+              startedAt > allUserSegments[userId].startedAt
+            ) {
+              allUserSegments[userId] = {
+                segment: activityName,
+                startedAt: startedAt,
+              };
+            }
+          });
+        });
+        
+        // Inactive users = all users - active users
+        const inactiveUserSegments = {};
+        Object.entries(allUserSegments).forEach(([userId, segmentData]) => {
+          if (!activeUsers.has(userId)) {
+            inactiveUserSegments[userId] = segmentData.segment;
+          }
+        });
+
+        // Update inactive users count
+        const inactiveElement = document.getElementById("inactive");
+        if (inactiveElement) {
+          inactiveElement.textContent = `${
+            Object.keys(inactiveUserSegments).length
+          } Inactive Users`;
+        }
+
+        // Build list items for inactive users
+        const inactiveUsersList = Object.entries(inactiveUserSegments)
+          .map(([userId, segment]) => {
+            const userName = users[userId]?.name || `User ${userId}`;
+            const segmentId = segment.toLowerCase().replace(/[^a-z0-9]/g, "-");
+
+            return `
+            <li class="person">
+              <a href="user.html?id=${userId}">${userName}</a> (last active in
+              <a href="#${segmentId}">${segment}</a>)
+            </li>
+            `;
+          })
+          .join("");
+
+        // Update the inactive users section
+        const inactiveUsersList_element = document.getElementById(
+          "inactive-users-list"
+        );
+        if (inactiveUsersList_element) {
+          if (inactiveUsersList) {
+            inactiveUsersList_element.innerHTML = inactiveUsersList;
+          } else {
+            inactiveUsersList_element.innerHTML =
+              '<li class="person text-neutral-500">No inactive users</li>';
+          }
+        } else {
+          console.warn("Inactive users list element not found");
+        }
+      }
+
+      // Initialize the dashboard with real-time updates
+      async function initDashboard() {
+        console.log("Initializing dashboard...");
+
+        // Wait for DOM to be fully ready
+        if (document.readyState === "loading") {
+          console.log("DOM not ready, waiting...");
+          return;
+        }
+
+        // Double-check that the required DOM elements exist
+        const activeElement = document.querySelector("#active");
+        if (!activeElement) {
+          console.error("Required DOM elements not found, retrying in 100ms");
+          setTimeout(initDashboard, 100);
+          return;
+        }
+        console.log("DOM ready, setting up real-time listener...");
+        
+        // Set up real-time listener
+        const dbRef = ref(database);
+        onValue(
+          dbRef,
+          (snapshot) => {
+            try {
+              if (snapshot.exists()) {
+                const dbData = snapshot.val();
+                console.log("Database data updated:", dbData);
+                currentDbData = dbData; // Store for periodic checks
+                // Update the active users list and render activities
+                updateActiveUsersList(dbData);
+                updateInactiveUsersList(dbData);
+                renderActivities(dbData);
+
+                // Store this snapshot for next comparison
+                previousDataSnapshot = dbData;
+              } else {
+                console.log("No data available");
+              }
+            } catch (error) {
+              console.error("Error in Firebase callback:", error);
+            }
+          },
+          (error) => {
+            console.error("Error with real-time listener:", error);
+          }
+        );
+
+        // Set up periodic check for inactive users (every 5 seconds)
+        setInterval(() => {
+          if (currentDbData) {
+            console.log("Periodic check for inactive users...");
+            updateActiveUsersList(currentDbData);
+            updateInactiveUsersList(currentDbData);
+            renderActivities(currentDbData);
+          }
+        }, 5000); // Check every 5 seconds
+      }
+
+      // Start the dashboard when the page loads
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initDashboard);
+      } else {
+        // DOM already loaded, but wait a tiny bit to ensure everything is ready
+        setTimeout(initDashboard, 50);
+      }
+    </script>
   </body>
 </html>
