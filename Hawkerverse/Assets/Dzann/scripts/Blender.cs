@@ -4,91 +4,122 @@ using UnityEngine;
 public class Blender : MonoBehaviour
 {
     [Header("Blender Visuals")]
-    public Renderer liquidRenderer;
-    public Transform blenderContentsParent;
+    public Transform blenderContentsParent; // Parent for visual fruit pieces
 
-    [Header("Fruit Visuals Inside Blender")]
+    [Header("Liquid Settings")]
+    public GameObject liquidPrefab; // Prefab of the smoothie/liquid
+    public Transform liquidSpawnPoint; // Where the liquid should appear
+    private GameObject currentLiquid;
+
+    [Header("Fruit Inside Prefabs")]
     public GameObject appleInsidePrefab;
     public GameObject bananaInsidePrefab;
     public GameObject kiwiInsidePrefab;
     public GameObject strawberryInsidePrefab;
-    public GameObject pineappleInsidePrefab;
+    //public GameObject pineappleInsidePrefab;
     public GameObject lemonInsidePrefab;
     public GameObject coconutInsidePrefab;
     public GameObject pearInsidePrefab;
     public GameObject watermelonInsidePrefab;
 
-    private HashSet<string> addedFruits = new HashSet<string>();
+    private List<string> fruitsInBlender = new List<string>();
 
-    public void AddHeldFruitByName(GameObject heldFruit)
+    // Adds fruit to blender and spawns visual
+    public void AddFruit(string fruitType)
     {
-        string objName = heldFruit.name.ToLower();
+        Debug.Log($"AddFruit called with fruitType: '{fruitType}'");
 
-        if (objName.Contains("apple")) HandleFruit("Apple", appleInsidePrefab, heldFruit);
-        else if (objName.Contains("banana")) HandleFruit("Banana", bananaInsidePrefab, heldFruit);
-        else if (objName.Contains("kiwi")) HandleFruit("Kiwi", kiwiInsidePrefab, heldFruit);
-        else if (objName.Contains("strawberry")) HandleFruit("Strawberry", strawberryInsidePrefab, heldFruit);
-        else if (objName.Contains("pineapple")) HandleFruit("Pineapple", pineappleInsidePrefab, heldFruit);
-        else if (objName.Contains("lemon")) HandleFruit("Lemon", lemonInsidePrefab, heldFruit);
-        else if (objName.Contains("coconut")) HandleFruit("Coconut", coconutInsidePrefab, heldFruit);
-        else if (objName.Contains("pear")) HandleFruit("Pear", pearInsidePrefab, heldFruit);
-        else if (objName.Contains("watermelon")) HandleFruit("Watermelon", watermelonInsidePrefab, heldFruit);
+        fruitsInBlender.Add(fruitType);
+
+        GameObject visualPrefab = GetFruitPrefab(fruitType);
+        if (visualPrefab != null && blenderContentsParent != null)
+        {
+            Debug.Log($"Instantiating visual prefab for '{fruitType}'");
+            GameObject visual = Instantiate(visualPrefab, blenderContentsParent);
+            visual.transform.localPosition = Vector3.zero; // Snap to center
+        }
+        else
+        {
+            Debug.Log($"Fruit prefab for '{fruitType}' is null or blenderContentsParent is missing.");
+        }
     }
 
-    private void HandleFruit(string fruitName, GameObject visualPrefab, GameObject heldFruit)
+    // Triggers blending and spawns liquid
+    public void Blend()
     {
-        if (!addedFruits.Contains(fruitName))
-        {
-            addedFruits.Add(fruitName);
-
-            if (visualPrefab != null && blenderContentsParent != null)
-            {
-                GameObject visual = Instantiate(visualPrefab, blenderContentsParent);
-                visual.transform.localPosition = Vector3.zero;
-            }
-        }
-
-        Destroy(heldFruit);
-    }
-
-    public void BlendFruits()
-    {
-        if (addedFruits.Count < 2)
-        {
-            Debug.Log("Not enough fruit to blend!");
-            return;
-        }
-
-        Color smoothieColor = Color.gray;
-        string smoothieName = "Unknown Smoothie";
-
-        if (addedFruits.SetEquals(new HashSet<string> { "Apple", "Banana" }))
-        {
-            smoothieColor = Color.yellow;
-            smoothieName = "Apple Banana Smoothie";
-        }
-        else if (addedFruits.SetEquals(new HashSet<string> { "Apple", "Watermelon" }))
-        {
-            smoothieColor = Color.red;
-            smoothieName = "Apple Watermelon Smoothie";
-        }
-        else if (addedFruits.SetEquals(new HashSet<string> { "Banana", "Watermelon" }))
-        {
-            smoothieColor = new Color(1f, 0.5f, 0f); // Orange
-            smoothieName = "Banana Watermelon Smoothie";
-        }
-
-        if (liquidRenderer != null)
-        {
-            liquidRenderer.material.color = smoothieColor;
-        }
-
-        Debug.Log($"Blended: {smoothieName}");
-
-        addedFruits.Clear();
+        Debug.Log("Blend() was triggered!");
+        // Destroy fruit visuals
         foreach (Transform child in blenderContentsParent)
         {
             Destroy(child.gameObject);
         }
+
+        // Destroy old liquid
+        if (currentLiquid != null)
+        {
+            Destroy(currentLiquid);
+        }
+
+        // Determine blended color
+        Color blendedColor = DetermineSmoothieColor();
+
+        // Instantiate new liquid
+        if (liquidPrefab != null && liquidSpawnPoint != null)
+        {
+            currentLiquid = Instantiate(liquidPrefab, liquidSpawnPoint.position, Quaternion.identity, liquidSpawnPoint);
+
+            Renderer rend = currentLiquid.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.material.color = blendedColor;
+            }
+        }
+        else
+        {
+            Debug.Log("Missing liquidPrefab or liquidSpawnPoint.");
+        }
+
+        fruitsInBlender.Clear();
+    }
+
+    // Helper: Get visual prefab for fruit
+    private GameObject GetFruitPrefab(string fruitType)
+    {
+        switch (fruitType.ToLower())
+        {
+            case "apple": return appleInsidePrefab;
+            case "banana": return bananaInsidePrefab;
+            case "kiwi": return kiwiInsidePrefab;
+            case "strawberry": return strawberryInsidePrefab;
+            //case "pineapple": return pineappleInsidePrefab;
+            case "lemon": return lemonInsidePrefab;
+            case "coconut": return coconutInsidePrefab;
+            case "pear": return pearInsidePrefab;
+            case "watermelon": return watermelonInsidePrefab;
+            default:
+                Debug.Log($"No prefab found for fruit type '{fruitType}'");
+                return null;
+        }
+    }
+
+    // Color mixing logic
+    private Color DetermineSmoothieColor()
+    {
+        bool hasRed = fruitsInBlender.Contains("apple") || fruitsInBlender.Contains("strawberry") || fruitsInBlender.Contains("watermelon");
+        bool hasYellow = fruitsInBlender.Contains("banana") || fruitsInBlender.Contains("lemon");
+        bool hasGreen = fruitsInBlender.Contains("kiwi") || fruitsInBlender.Contains("pear");
+
+        if (hasRed && hasYellow && hasGreen)
+            return new Color(0.6f, 0.4f, 0.4f); // brownish
+        else if (hasRed && hasYellow)
+            return new Color(1f, 0.5f, 0.2f); // orange
+        else if (hasRed)
+            return Color.red;
+        else if (hasYellow)
+            return Color.yellow;
+        else if (hasGreen)
+            return Color.green;
+        else
+            return Color.gray; // default
     }
 }

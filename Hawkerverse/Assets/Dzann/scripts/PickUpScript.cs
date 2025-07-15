@@ -24,7 +24,7 @@ public class PickUpScript : MonoBehaviour
             grabEText.gameObject.SetActive(false);
     }
 
-    void Update()
+        void Update()
     {
         CheckForBlender();
         HandleHoverText();
@@ -33,10 +33,20 @@ public class PickUpScript : MonoBehaviour
         {
             if (heldObj != null && targetedBlender != null)
             {
-                heldObj.transform.SetParent(null); // unparent from hand
-                targetedBlender.AddHeldFruitByName(heldObj); // blender destroys it
+                // Put fruit into blender
+                heldObj.transform.SetParent(null);
+
+                string fruitType = heldObj.name.ToLower().Split(' ')[0];
+                targetedBlender.AddFruit(fruitType);
+
+                Destroy(heldObj);
                 heldObj = null;
                 heldObjRb = null;
+            }
+            else if (heldObj == null && targetedBlender != null)
+            {
+                // Not holding fruit but looking at blender: Blend!
+                targetedBlender.Blend();
             }
             else if (heldObj == null)
             {
@@ -58,7 +68,6 @@ public class PickUpScript : MonoBehaviour
             }
         }
     }
-
     void HandleHoverText()
     {
         if (grabEText == null) return;
@@ -84,7 +93,7 @@ public class PickUpScript : MonoBehaviour
         grabEText.gameObject.SetActive(false);
     }
 
-    void CheckForBlender()
+        void CheckForBlender()
     {
         targetedBlender = null;
 
