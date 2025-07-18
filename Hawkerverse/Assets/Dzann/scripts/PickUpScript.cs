@@ -31,20 +31,58 @@ public class PickUpScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (heldObj != null && targetedBlender != null)
+            if (heldObj != null)
             {
-                heldObj.transform.SetParent(null); // unparent from hand
-                targetedBlender.AddHeldFruitByName(heldObj); // blender destroys it
-                heldObj = null;
-                heldObjRb = null;
-            }
-            else if (heldObj == null)
-            {
-                TryPickUp();
+                // Holding something
+                if (targetedBlender != null)
+                {
+                    string heldName = heldObj.name.ToLower();
+
+                    // Case 1: Holding a fruit
+                    if (IsFruitName(heldName))
+                    {
+                        if (!targetedBlender.IsBlended)
+                        {
+                            string fruitType = heldName.Split(' ')[0];
+                            targetedBlender.AddFruit(fruitType);
+
+                            Destroy(heldObj);
+                            heldObj = null;
+                            heldObjRb = null;
+                        }
+                        else
+                        {
+                            Debug.Log("Blender must be cleared before adding more fruit.");
+                        }
+                    }
+                    // Case 2: Holding a cup
+                    else if (heldObj.GetComponent<Cup>() != null)
+                    {
+                        Cup cup = heldObj.GetComponent<Cup>();
+                        bool success = targetedBlender.TransferToCup(cup);
+                        if (success)
+                        {
+                            DropObject(); // Let player continue after transfer
+                        }
+                    }
+                }
+                else
+                {
+                    // Not looking at blender, drop object
+                    DropObject();
+                }
             }
             else
             {
-                DropObject();
+                // Not holding anything
+                if (targetedBlender != null)
+                {
+                    targetedBlender.Blend(); // Blend if not holding
+                }
+                else
+                {
+                    TryPickUp();
+                }
             }
         }
 
@@ -74,7 +112,7 @@ public class PickUpScript : MonoBehaviour
         {
             string objName = hit.collider.gameObject.name.ToLower();
 
-            if (IsFruitName(objName))
+            if (IsFruitName(objName) || hit.collider.GetComponent<Blender>() != null || hit.collider.GetComponent<Cup>() != null)
             {
                 grabEText.gameObject.SetActive(true);
                 return;
@@ -106,7 +144,7 @@ public class PickUpScript : MonoBehaviour
         {
             string objName = hit.collider.gameObject.name.ToLower();
 
-            if (IsFruitName(objName))
+            if (IsFruitName(objName) || hit.collider.GetComponent<Cup>() != null)
             {
                 GameObject pickUpObj = hit.collider.gameObject;
                 Rigidbody rb = pickUpObj.GetComponent<Rigidbody>();
@@ -169,7 +207,7 @@ public class PickUpScript : MonoBehaviour
         heldObj.layer = 0;
         heldObjRb.isKinematic = false;
         heldObj.transform.SetParent(null);
-        heldObj.transform.position += Vector3.up * 0.3f; // prevent clipping into floor
+        heldObj.transform.position += Vector3.up * 0.3f;
     }
 
     bool IsFruitName(string name)
