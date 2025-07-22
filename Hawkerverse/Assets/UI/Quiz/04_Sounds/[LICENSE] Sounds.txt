@@ -1,0 +1,25 @@
+//BGM License
+1. Touching Story.mp3
+Music by Kevin MacLeod. Available under the Creative Commons Attribution 3.0 Unported license.
+https://creativecommons.org/licenses/by/3.0/
+https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100036
+
+2. Touching Moments Four - Melody.mp3
+Music by Kevin MacLeod. Available under the Creative Commons Attribution 3.0 Unported license.
+https://creativecommons.org/licenses/by/3.0/
+https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100040
+
+
+//Sounds License
+1. Confirm - HarpEPianoEdit.mp3
+https://freesound.org/people/ying16/sounds/353070/
+made with mda Piano & VS Etherealwinds Harp VSTs in Cubase
+
+2. beep_up.wav
+https://freesound.org/people/paep3nguin/sounds/388046/
+Two rapid, ascending beeps. Good for use in a user interface or application to indicate something turning on. Made in Audacity.
+
+3. String Ending.mp3
+https://freesound.org/people/mriedl/sounds/410548/
+Used at the end of a trailer to put emphasis on the last line.
+
