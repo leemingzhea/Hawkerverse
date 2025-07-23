@@ -38,7 +38,7 @@ public class PickUpScript : MonoBehaviour
                 {
                     string heldName = heldObj.name.ToLower();
 
-                    // Case 1: Holding a fruit
+                    // Holding a fruit
                     if (IsFruitName(heldName))
                     {
                         if (!targetedBlender.IsBlended)
@@ -55,21 +55,20 @@ public class PickUpScript : MonoBehaviour
                             Debug.Log("Blender must be cleared before adding more fruit.");
                         }
                     }
-                    // Case 2: Holding a cup
+                    // Holding a cup
                     else if (heldObj.GetComponent<Cup>() != null)
                     {
                         Cup cup = heldObj.GetComponent<Cup>();
                         bool success = targetedBlender.TransferToCup(cup);
                         if (success)
                         {
-                            DropObject(); // Let player continue after transfer
+                            DropObject();
                         }
                     }
                 }
                 else
                 {
-                    // Not looking at blender, drop object
-                    DropObject();
+                    DropObject(); // Drop if not pointing at blender
                 }
             }
             else
@@ -77,7 +76,7 @@ public class PickUpScript : MonoBehaviour
                 // Not holding anything
                 if (targetedBlender != null)
                 {
-                    targetedBlender.Blend(); // Blend if not holding
+                    targetedBlender.Blend();
                 }
                 else
                 {
@@ -153,13 +152,14 @@ public class PickUpScript : MonoBehaviour
                 {
                     heldObj = pickUpObj;
                     heldObjRb = rb;
-                    originalScale = heldObj.transform.localScale;
+
+                    originalScale = heldObj.transform.localScale; // Save scale to restore later
 
                     heldObjRb.isKinematic = true;
                     heldObj.transform.SetParent(holdPos);
                     heldObj.transform.localPosition = Vector3.zero;
                     heldObj.transform.localRotation = Quaternion.identity;
-                    heldObj.transform.localScale = originalScale;
+                    heldObj.transform.localScale = originalScale; // Reset scale
                     heldObj.layer = LayerNumber;
 
                     Collider objCol = heldObj.GetComponent<Collider>();
@@ -208,6 +208,7 @@ public class PickUpScript : MonoBehaviour
         heldObjRb.isKinematic = false;
         heldObj.transform.SetParent(null);
         heldObj.transform.position += Vector3.up * 0.3f;
+        heldObj.transform.localScale = originalScale; // Restore original size on drop
     }
 
     bool IsFruitName(string name)
