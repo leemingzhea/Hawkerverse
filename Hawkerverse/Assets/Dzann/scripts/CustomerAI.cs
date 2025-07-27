@@ -13,30 +13,63 @@ public class CustomerAI : MonoBehaviour
     private bool isLeaving = false;
 
     private CustomerInteraction customerInteraction;
+    private CustomerQueueManager queueManager; 
+
 
     void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
-        myAgent.SetDestination(orderingPos.position);
 
         customerInteraction = GetComponent<CustomerInteraction>();
+        queueManager = FindObjectOfType<CustomerQueueManager>();
     }
 
     void Update()
     {
-        // First: stop at ordering position
-        if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance)
+        if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance && !myAgent.pathPending)
         {
             hasReachedOrderingPos = true;
             myAgent.isStopped = true;
         }
 
-        // After drink is delivered, go to leaving position
         if (!isLeaving && customerInteraction != null && customerInteraction.drinkDelivered)
         {
             isLeaving = true;
             myAgent.isStopped = false;
             myAgent.SetDestination(leavingPos.position);
         }
+
+        if (isLeaving && Vector3.Distance(transform.position, leavingPos.position) <= 0.5f)
+        {
+            queueManager.OnCustomerLeaves(this.gameObject);
+            OnCustomerLeaves(); // Destroys customer
+        }
+    }
+
+    public void SetQueueManager(CustomerQueueManager manager)
+    {
+        queueManager = manager;
+    }
+
+
+    public void MoveTo(Vector3 destination)
+    {
+        if (myAgent != null && myAgent.isOnNavMesh)
+        {
+            myAgent.SetDestination(destination);
+            Debug.Log("Moving customer to: " + destination);
+
+        }
+        else
+        {
+            Debug.LogWarning("Agent not on NavMesh or missing!");
+        }
+    }
+
+    public void OnCustomerLeaves()
+    {
+        // Handle customer leaving logic
+        myAgent.isStopped = true;
+        Destroy(gameObject, 1f); // Optional: delay for walking away
     }
 }

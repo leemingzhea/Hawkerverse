@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,12 +7,23 @@ public class CustomerOrder : MonoBehaviour
     public List<string> requestedFruits = new List<string>();
     public Color desiredDrinkColor;
     public bool IsWaitingForDrink = true;
-    public bool HasStatedOrder = false;
+    public bool HasOrdered = false; // ✅ Now exists
 
     void Start()
     {
-        GenerateRandomOrder();
+        // Don't generate order on Start anymore — wait for player interaction
     }
+
+    public void StartOrder()
+    {
+        if (HasOrdered) return;
+
+        GenerateRandomOrder(); // generates the drink request
+        HasOrdered = true;
+        IsWaitingForDrink = true; // tells system customer is ready to receive drink
+        Debug.Log($"{gameObject.name} ordered: {string.Join(" + ", requestedFruits)} -> {desiredDrinkColor}");
+    }
+
 
     void GenerateRandomOrder()
     {
@@ -27,7 +38,6 @@ public class CustomerOrder : MonoBehaviour
         }
 
         desiredDrinkColor = JuiceColorManager.GetBlendedColor(requestedFruits);
-        Debug.Log($"{gameObject.name} ordered: {string.Join(" + ", requestedFruits)} -> {desiredDrinkColor}");
     }
 
     public bool TryReceiveDrink(GameObject heldCup)
@@ -57,7 +67,6 @@ public class CustomerOrder : MonoBehaviour
         Debug.Log("Wrong color");
         return false;
     }
-
 
     public void ReceiveDrink()
     {

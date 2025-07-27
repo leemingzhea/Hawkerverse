@@ -8,6 +8,7 @@ TagManager:
   - TestButton
   - canPickUp
   - Customer
+  - Cup
   layers:
   - Default
   - TransparentFX
