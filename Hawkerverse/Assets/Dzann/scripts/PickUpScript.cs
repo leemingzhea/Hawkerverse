@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -12,10 +12,18 @@ public class PickUpScript : MonoBehaviour
     public GameObject grabEText;
 
     private GameObject heldObj;
+
+    public GameObject HeldObject
+    {
+        get { return heldObj; }
+        set { heldObj = value; }
+    }
+
     private Rigidbody heldObjRb;
     private int LayerNumber;
     private Blender targetedBlender;
     private Vector3 originalScale;
+
 
     void Start()
     {
@@ -96,6 +104,10 @@ public class PickUpScript : MonoBehaviour
         }
     }
 
+    public void ClearHeldObject()
+    {
+        HeldObject = null;
+    }
     void HandleHoverText()
     {
         if (grabEText == null) return;
@@ -153,23 +165,30 @@ public class PickUpScript : MonoBehaviour
                     heldObj = pickUpObj;
                     heldObjRb = rb;
 
-                    originalScale = heldObj.transform.localScale; // Save scale to restore later
+                    originalScale = heldObj.transform.localScale;
 
                     heldObjRb.isKinematic = true;
                     heldObj.transform.SetParent(holdPos);
                     heldObj.transform.localPosition = Vector3.zero;
                     heldObj.transform.localRotation = Quaternion.identity;
-                    heldObj.transform.localScale = originalScale; // Reset scale
+                    heldObj.transform.localScale = originalScale;
                     heldObj.layer = LayerNumber;
 
                     Collider objCol = heldObj.GetComponent<Collider>();
                     Collider playerCol = player.GetComponent<Collider>();
                     if (objCol != null && playerCol != null)
                         Physics.IgnoreCollision(objCol, playerCol, true);
+
+                    // ✅ Notify DrinkDelivery if it's a Cup
+                    if (heldObj.GetComponent<Cup>() != null)
+                    {
+                        FindObjectOfType<DrinkDelivery>()?.SetHeldCup(heldObj);
+                    }
                 }
             }
         }
     }
+
 
     void DropObject()
     {
@@ -222,5 +241,9 @@ public class PickUpScript : MonoBehaviour
                name.Contains("coconut") ||
                name.Contains("pear") ||
                name.Contains("watermelon");
+    }
+    public void DropHeldObject()
+    {
+        DropObject();
     }
 }

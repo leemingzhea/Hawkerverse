@@ -1,28 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CustomerAI : MonoBehaviour
 {
-    public Transform targetPoint; // where the customer stops (near the stall)
-    public UnityEngine.AI.NavMeshAgent myAgent;
-    public bool hasReached = false;
-    public bool readyToOrder = false;
+    public Transform orderingPos;  // Where the customer stops to order
+    public Transform leavingPos;   // Where the customer leaves to
+    public NavMeshAgent myAgent;
+
+    private bool hasReachedOrderingPos = false;
+    private bool isLeaving = false;
+
+    private CustomerInteraction customerInteraction;
 
     void Start()
     {
-        myAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        myAgent.SetDestination(targetPoint.position);
+        myAgent = GetComponent<NavMeshAgent>();
+        myAgent.SetDestination(orderingPos.position);
+
+        customerInteraction = GetComponent<CustomerInteraction>();
     }
 
     void Update()
     {
-        if (!hasReached && myAgent.remainingDistance <= myAgent.stoppingDistance)
+        // First: stop at ordering position
+        if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance)
         {
-            hasReached = true;
-            readyToOrder = true;
+            hasReachedOrderingPos = true;
             myAgent.isStopped = true;
+        }
+
+        // After drink is delivered, go to leaving position
+        if (!isLeaving && customerInteraction != null && customerInteraction.drinkDelivered)
+        {
+            isLeaving = true;
+            myAgent.isStopped = false;
+            myAgent.SetDestination(leavingPos.position);
         }
     }
 }
- 

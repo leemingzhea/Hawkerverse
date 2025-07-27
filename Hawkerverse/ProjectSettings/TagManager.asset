@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - TestButton
   - canPickUp
+  - Customer
   layers:
   - Default
   - TransparentFX

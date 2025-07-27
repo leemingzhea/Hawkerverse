@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Blender : MonoBehaviour
 {
@@ -137,7 +139,7 @@ public class Blender : MonoBehaviour
             return false;
         }
 
-        cup.SetColor(currentSmoothieColor);
+        cup.SetSmoothie(currentSmoothieColor); 
         ClearBlender();
         Debug.Log("Smoothie transferred to cup.");
         return true;

@@ -4,44 +4,54 @@ using UnityEngine;
 
 public class DrinkDelivery : MonoBehaviour
 {
-    private bool isHoldingCup = false;
+    [SerializeField] private float interactRange = 2f;  // Fixed: define interact range in inspector
     private GameObject heldCup = null;
 
     void Update()
     {
-        if (isHoldingCup && Input.GetKeyDown(KeyCode.E)) // press E near customer to deliver
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, 2f); // check nearby
+            Debug.Log($"[DrinkDelivery] Interacting with: {heldCup?.name}");
 
-            foreach (Collider hit in hits)
+            Collider[] hits = Physics.OverlapSphere(transform.position, interactRange);
+            foreach (var hit in hits)
             {
-                if (hit.CompareTag("Customer"))
+                CustomerOrder customerOrder = hit.GetComponent<CustomerOrder>();
+                if (customerOrder != null)
                 {
-                    CustomerOrder customerOrder = hit.GetComponent<CustomerOrder>();
-
-                    if (customerOrder != null && customerOrder.IsWaitingForDrink)
+                    if (heldCup != null)
                     {
-                        customerOrder.Interact(heldCup);
-
-                        if (!customerOrder.IsWaitingForDrink) // means drink accepted
+                        bool success = customerOrder.TryReceiveDrink(heldCup);
+                        Debug.Log($"Trying to give drink to {customerOrder.name}: {(success ? "SUCCESS" : "FAIL")}");
+                        if (success)
                         {
+                            // Destroy cup or mark as used
                             Destroy(heldCup);
                             heldCup = null;
-                            isHoldingCup = false;
+                            return;
                         }
                     }
-
-
-                        return;
+                    else
+                    {
+                        Debug.Log("No drink held to deliver.");
+                    }
                 }
             }
         }
     }
-    
 
     public void SetHeldCup(GameObject cup)
     {
         heldCup = cup;
-        isHoldingCup = true;
+    }
+
+    public GameObject GetHeldCup()
+    {
+        return heldCup;
+    }
+
+    public bool HasCup()
+    {
+        return heldCup != null;
     }
 }
