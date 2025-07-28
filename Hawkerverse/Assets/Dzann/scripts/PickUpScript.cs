@@ -124,6 +124,7 @@ public class PickUpScript : MonoBehaviour
             string objName = hit.collider.gameObject.name.ToLower();
 
             if (IsFruitName(objName) || hit.collider.GetComponent<Blender>() != null || hit.collider.GetComponent<Cup>() != null)
+
             {
                 grabEText.gameObject.SetActive(true);
                 return;
@@ -151,7 +152,7 @@ public class PickUpScript : MonoBehaviour
     void TryPickUp()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpRange))
+        if (Physics.Raycast(transform.position,transform.forward, out hit, pickUpRange))
         {
             string objName = hit.collider.gameObject.name.ToLower();
 
@@ -164,6 +165,7 @@ public class PickUpScript : MonoBehaviour
                 {
                     heldObj = pickUpObj;
                     heldObjRb = rb;
+                    Debug.Log("pickedup: " + heldObj.name);
 
                     originalScale = heldObj.transform.localScale;
 

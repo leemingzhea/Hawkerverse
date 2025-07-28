@@ -13,12 +13,14 @@ public class CustomerAI : MonoBehaviour
     private bool isLeaving = false;
 
     private CustomerInteraction customerInteraction;
-    private CustomerQueueManager queueManager; 
+    private CustomerQueueManager queueManager;
 
+    private Animator animator; // Reference to the Animator component
 
     void Start()
     {
         myAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>(); // Get the Animator component
 
         customerInteraction = GetComponent<CustomerInteraction>();
         queueManager = FindObjectOfType<CustomerQueueManager>();
@@ -26,12 +28,21 @@ public class CustomerAI : MonoBehaviour
 
     void Update()
     {
+        // Update animation speed based on actual movement
+        if (animator != null && myAgent != null)
+        {
+            float speed = myAgent.velocity.magnitude;
+            animator.SetFloat("Speed", speed);
+        }
+
+        // Handle reaching ordering position
         if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance && !myAgent.pathPending)
         {
             hasReachedOrderingPos = true;
             myAgent.isStopped = true;
         }
 
+        // Handle leaving
         if (!isLeaving && customerInteraction != null && customerInteraction.drinkDelivered)
         {
             isLeaving = true;
@@ -46,25 +57,26 @@ public class CustomerAI : MonoBehaviour
         }
     }
 
+
     public void SetQueueManager(CustomerQueueManager manager)
     {
         queueManager = manager;
     }
-
 
     public void MoveTo(Vector3 destination)
     {
         if (myAgent != null && myAgent.isOnNavMesh)
         {
             myAgent.SetDestination(destination);
+            myAgent.isStopped = false; // Make sure movement starts
             Debug.Log("Moving customer to: " + destination);
-
         }
         else
         {
             Debug.LogWarning("Agent not on NavMesh or missing!");
         }
     }
+
 
     public void OnCustomerLeaves()
     {
