@@ -630,9 +630,11 @@ MonoBehaviour:
   currentImage: {fileID: 3105203}
   imageSequence:
   - {fileID: 21300000, guid: cb3f71282f0ac0b46948c3afdfc127fa, type: 3}
-  - {fileID: 21300000, guid: 70946b7f23ace7645af25c841cdffbf0, type: 3}
-  - {fileID: 21300000, guid: 431189a51b558f74a82ad2894154298e, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: cb8d6a1cd4e47d9489935da4bb14a3a8, type: 3}
+  - {fileID: 21300000, guid: 14cc301e99ca4a942a49ccf210969619, type: 3}
+  - {fileID: 21300000, guid: 99f69ea28fdb0064eaca9ea69c0c5b4d, type: 3}
+  - {fileID: 21300000, guid: 5b03522fd473f304f913d49d938d8909, type: 3}
+  - {fileID: 21300000, guid: 3d13a591654dae047b52c737e9fc26e1, type: 3}
   - {fileID: 21300000, guid: b9477fc75d843144abc29b0e79a87f15, type: 3}
   fadeDuration: 1
   deactivateAfterFade: 1
