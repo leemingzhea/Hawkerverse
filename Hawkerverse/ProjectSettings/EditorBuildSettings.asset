@@ -18,9 +18,15 @@ EditorBuildSettings:
     path: Assets/Scenes/3 - Hawkerverse.unity
     guid: 1ca82ac5183a74646976d29b08b82287
   - enabled: 1
-    path: Assets/Scenes/Checkpoints.unity
+    path: Assets/UI/Checkpoint/Example/Checkpoints.unity
     guid: e8e7008008948ba46bd5333c7da4d4e4
   - enabled: 1
     path: Assets/Scenes/Quiz.unity
     guid: e921455324ffacf4893a2c0105ef8378
+  - enabled: 1
+    path: Assets/Dzann/scenes/menu.unity
+    guid: b77bf11e6fc261841b34e85369106986
+  - enabled: 1
+    path: Assets/Dzann/scenes/DayOneCutscene.unity
+    guid: 6827e08cc8cf6ea46a6b952255e18e6c
   m_configObjects: {}
