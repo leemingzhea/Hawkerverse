@@ -26,15 +26,18 @@ public class CustomerInteraction : MonoBehaviour
                 Debug.Log("Customer has not ordered. Starting dialogue.");
                 GameManager.Instance.ShowDialogue("What would you like?");
                 order.StartOrder(); // Start the customer's order
+                return;
             }
             else if (order.IsWaitingForDrink) // Corrected from 'customerOrder'
             {
                 Debug.Log("Customer has ordered. Trying to deliver drink.");
                 TryDeliverDrink(); // Try delivering the drink
+                return;
             }
             else
             {
                 Debug.Log("Nothing to do.");
+                return;
             }
         }
     }

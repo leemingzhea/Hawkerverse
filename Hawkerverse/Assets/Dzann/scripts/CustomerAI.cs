@@ -8,6 +8,8 @@ public class CustomerAI : MonoBehaviour
     public Transform orderingPos;  // Where the customer stops to order
     public Transform leavingPos;   // Where the customer leaves to
     public NavMeshAgent myAgent;
+    private Transform playerTransform;
+
 
     private bool hasReachedOrderingPos = false;
     private bool isLeaving = false;
@@ -24,6 +26,8 @@ public class CustomerAI : MonoBehaviour
 
         customerInteraction = GetComponent<CustomerInteraction>();
         queueManager = FindObjectOfType<CustomerQueueManager>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+
     }
 
     void Update()
@@ -31,9 +35,10 @@ public class CustomerAI : MonoBehaviour
         // Update animation speed based on actual movement
         if (animator != null && myAgent != null)
         {
-            float speed = myAgent.velocity.magnitude;
+            float speed = myAgent.isStopped ? 0f : myAgent.velocity.magnitude;
             animator.SetFloat("Speed", speed);
         }
+
 
         // Handle reaching ordering position
         if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance && !myAgent.pathPending)
@@ -55,6 +60,24 @@ public class CustomerAI : MonoBehaviour
             queueManager.OnCustomerLeaves(this.gameObject);
             OnCustomerLeaves(); // Destroys customer
         }
+
+        if (!hasReachedOrderingPos && myAgent.remainingDistance <= myAgent.stoppingDistance && !myAgent.pathPending)
+        {
+            hasReachedOrderingPos = true;
+            myAgent.isStopped = true;
+        }
+
+        if (hasReachedOrderingPos && !isLeaving && playerTransform != null)
+        {
+            Vector3 lookDirection = playerTransform.position - transform.position;
+            lookDirection.y = 0; // Ignore vertical difference
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
+        }
+
     }
 
 
