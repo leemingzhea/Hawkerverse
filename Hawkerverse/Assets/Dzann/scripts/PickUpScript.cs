@@ -11,7 +11,7 @@ public class PickUpScript : MonoBehaviour
     public float pickUpRange = 5f;
     public GameObject grabEText;
 
-    private GameObject heldObj;
+    [SerializeField] private GameObject heldObj;
 
     public GameObject HeldObject
     {
@@ -70,7 +70,7 @@ public class PickUpScript : MonoBehaviour
                         bool success = targetedBlender.TransferToCup(cup);
                         if (success)
                         {
-                            DropObject();
+                            return;
                         }
                     }
                 }
