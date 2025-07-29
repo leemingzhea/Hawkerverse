@@ -10,7 +10,9 @@ public class PuzzleManager : MonoBehaviour
     
     [Header("Sound Effects")]
     public AudioSource audioSource;
+     [Header("CorrectSoundClip")]
     public AudioClip correctSound;
+    [Header("WrongSoundClip")]
     public AudioClip wrongSound;
 
     void Awake()
@@ -35,18 +37,23 @@ public class PuzzleManager : MonoBehaviour
             {
                 if (audioSource && wrongSound)
                     audioSource.PlayOneShot(wrongSound);
+                Debug.Log("Playing wrong audio");
 
                 winPanel.SetActive(false);
                 wrongPanel.SetActive(true);
                 return;
             }
+            else if (slot.placedPiece == null || slot.IsCorrect())
+            {
+                if (audioSource && correctSound)
+                    audioSource.PlayOneShot(correctSound);
+                Debug.Log("Playing correct audio");
+
+                winPanel.SetActive(true);
+                wrongPanel.SetActive(false);
+                Debug.Log("All slots correct! Showing win panel.");
+                
+            }
         }
-
-        if (audioSource && correctSound)
-            audioSource.PlayOneShot(correctSound);
-
-        winPanel.SetActive(true);
-        wrongPanel.SetActive(false);
-        Debug.Log("All slots correct! Showing win panel.");
     }
 }
