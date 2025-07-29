@@ -36,7 +36,7 @@ public class SpawnAndMoveAI : MonoBehaviour
         }
 
         // Instantiate the prefab
-        spawnedAgent = Instantiate(agentPrefab, spawnPoint.position, Quaternion.identity);
+        spawnedAgent = Instantiate(agentPrefab, spawnPoint.position, spawnPoint.rotation);
         Debug.Log("SpawnAndMoveAI: Agent spawned at " + spawnPoint.position);
 
         agent = spawnedAgent.GetComponent<NavMeshAgent>();
@@ -46,13 +46,6 @@ public class SpawnAndMoveAI : MonoBehaviour
         {
             Debug.LogError("Spawned object does not have a NavMeshAgent.");
             return;
-        }
-
-        if (!agent.isOnNavMesh)
-        {
-            Debug.LogWarning("Spawned agent is not on NavMesh. Trying Warp to fix.");
-            bool warped = agent.Warp(spawnPoint.position);
-            Debug.Log("Warp result: " + warped);
         }
 
         if (destinationPoint != null)

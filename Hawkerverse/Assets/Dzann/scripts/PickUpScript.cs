@@ -10,6 +10,7 @@ public class PickUpScript : MonoBehaviour
     public float throwForce = 500f;
     public float pickUpRange = 5f;
     public GameObject grabEText;
+    public bool isHoldingObject = false;
 
     [SerializeField] private GameObject heldObj;
 
@@ -23,6 +24,7 @@ public class PickUpScript : MonoBehaviour
     private int LayerNumber;
     private Blender targetedBlender;
     private Vector3 originalScale;
+    public CustomerInteraction customerInteraction;
 
 
     void Start()
@@ -41,7 +43,7 @@ public class PickUpScript : MonoBehaviour
         {
             if (heldObj != null)
             {
-                // Holding something
+                // 👉 Only do Blender logic if we're actually looking at a blender
                 if (targetedBlender != null)
                 {
                     string heldName = heldObj.name.ToLower();
@@ -57,6 +59,7 @@ public class PickUpScript : MonoBehaviour
                             Destroy(heldObj);
                             heldObj = null;
                             heldObjRb = null;
+                            isHoldingObject = false;
                         }
                         else
                         {
@@ -74,9 +77,11 @@ public class PickUpScript : MonoBehaviour
                         }
                     }
                 }
-                else
+                else if (customerInteraction == null || !customerInteraction.playerInRange)
                 {
-                    DropObject(); // Drop if not pointing at blender
+                    // ❗ Only drop if NOT looking at blender AND not inside customer trigger
+                    //DropObject();
+                    Debug.Log("Dropping object: " + heldObj.name);
                 }
             }
             else
@@ -107,7 +112,10 @@ public class PickUpScript : MonoBehaviour
     public void ClearHeldObject()
     {
         HeldObject = null;
+        heldObjRb = null;
+        isHoldingObject = false; // <--- Add this line
     }
+
     void HandleHoverText()
     {
         if (grabEText == null) return;
@@ -152,7 +160,7 @@ public class PickUpScript : MonoBehaviour
     void TryPickUp()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position,transform.forward, out hit, pickUpRange))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpRange))
         {
             string objName = hit.collider.gameObject.name.ToLower();
 
@@ -163,33 +171,43 @@ public class PickUpScript : MonoBehaviour
 
                 if (rb != null)
                 {
-                    heldObj = pickUpObj;
-                    heldObjRb = rb;
-                    Debug.Log("pickedup: " + heldObj.name);
-
-                    originalScale = heldObj.transform.localScale;
-
-                    heldObjRb.isKinematic = true;
-                    heldObj.transform.SetParent(holdPos);
-                    heldObj.transform.localPosition = Vector3.zero;
-                    heldObj.transform.localRotation = Quaternion.identity;
-                    heldObj.transform.localScale = originalScale;
-                    heldObj.layer = LayerNumber;
-
-                    Collider objCol = heldObj.GetComponent<Collider>();
-                    Collider playerCol = player.GetComponent<Collider>();
-                    if (objCol != null && playerCol != null)
-                        Physics.IgnoreCollision(objCol, playerCol, true);
-
-                    // ✅ Notify DrinkDelivery if it's a Cup
-                    if (heldObj.GetComponent<Cup>() != null)
-                    {
-                        FindObjectOfType<DrinkDelivery>()?.SetHeldCup(heldObj);
-                    }
+                    PickUp(pickUpObj, rb);
                 }
             }
         }
     }
+
+
+    void PickUp(GameObject pickUpObj, Rigidbody rb)
+    {
+        heldObj = pickUpObj;
+        heldObjRb = rb;
+
+        Debug.Log("pickedup: " + heldObj.name);
+
+        originalScale = heldObj.transform.localScale;
+
+        heldObjRb.isKinematic = true;
+        heldObj.transform.SetParent(holdPos);
+        heldObj.transform.localPosition = Vector3.zero;
+        heldObj.transform.localRotation = Quaternion.identity;
+        heldObj.transform.localScale = originalScale;
+        heldObj.layer = LayerMask.NameToLayer("holdLayer");
+
+        Collider objCol = heldObj.GetComponent<Collider>();
+        Collider playerCol = player.GetComponent<Collider>();
+        if (objCol != null && playerCol != null)
+            Physics.IgnoreCollision(objCol, playerCol, true);
+
+        isHoldingObject = true;
+
+        // ✅ Notify DrinkDelivery if it's a Cup
+        if (heldObj.GetComponent<Cup>() != null)
+        {
+            FindObjectOfType<DrinkDelivery>()?.SetHeldCup(heldObj);
+        }
+    }
+
 
 
     void DropObject()
@@ -199,7 +217,9 @@ public class PickUpScript : MonoBehaviour
         ResetHeldObjectPhysics();
         heldObj = null;
         heldObjRb = null;
+        isHoldingObject = false; // <--- Add this line
     }
+
 
     void ThrowObject()
     {
@@ -209,7 +229,9 @@ public class PickUpScript : MonoBehaviour
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
         heldObjRb = null;
+        isHoldingObject = false; // <--- Add this line
     }
+
 
     void MoveObject()
     {

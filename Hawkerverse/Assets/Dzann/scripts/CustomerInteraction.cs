@@ -8,38 +8,65 @@ public class CustomerInteraction : MonoBehaviour
     public CustomerQueueManager queueManager;
     public GameObject player;
 
-    private bool playerInRange = false;
+    public bool playerInRange = false;
     private bool hasShownOrder = false;
     public bool drinkDelivered = false;
+    public bool EmptyBool = true;
 
     public bool isAtFront = false;
+    public PickUpScript pickUpScript;
 
+
+    void Start()
+    {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+
+        if (pickUpScript == null && player != null)
+            pickUpScript = player.GetComponentInChildren<PickUpScript>();
+    }
 
     void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (pickUpScript != null)
         {
-            Debug.Log("E pressed and player is in range.");
+            Debug.Log("Is Holding Object: " + pickUpScript.isHoldingObject);
+        }
 
-            if (!order.HasOrdered) // Corrected from 'customerOrder'
+        if (!playerInRange || !Input.GetKeyDown(KeyCode.E)) return;
+
+        // Step 1: Customer hasn't ordered yet
+        if (!order.HasOrdered)
+        {
+            Debug.Log("Customer has not ordered. Starting dialogue.");
+            GameManager.Instance.ShowDialogue("What would you like?");
+            order.StartOrder();
+
+            return;
+        }
+
+        // Step 2: Customer is waiting for a drink
+        if (order.IsWaitingForDrink)
+        {
+            if (pickUpScript != null && pickUpScript.isHoldingObject) 
             {
-                Debug.Log("Customer has not ordered. Starting dialogue.");
-                GameManager.Instance.ShowDialogue("What would you like?");
-                order.StartOrder(); // Start the customer's order
-                return;
+                TryDeliverDrink();
+                Debug.Log("Player is holding a drink. Trying to deliver...");
             }
-            else if (order.IsWaitingForDrink) // Corrected from 'customerOrder'
+            else if (!hasShownOrder)
             {
-                Debug.Log("Customer has ordered. Trying to deliver drink.");
-                TryDeliverDrink(); // Try delivering the drink
-                return;
+                GameManager.Instance.ShowDialogue("I'd like a " + order.GetDrinkName() + " drink!");
+                hasShownOrder = true;
             }
             else
             {
-                Debug.Log("Nothing to do.");
-                return;
+                Debug.Log("Player has no drink yet.");
+
             }
+            return;
         }
+
+        Debug.Log("Nothing to do.");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +74,7 @@ public class CustomerInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            Debug.Log("Player entered interaction range with customer.");
         }
     }
 
@@ -56,14 +84,6 @@ public class CustomerInteraction : MonoBehaviour
         {
             playerInRange = false;
             GameManager.Instance.HideDialogue();
-        }
-    }
-
-    void ShowPromptAfterOrder()
-    {
-        if (playerInRange && order.IsWaitingForDrink)
-        {
-            GameManager.Instance.ShowDialogue("I'd like a " + order.GetDrinkName() + " drink!");
         }
     }
 
@@ -77,47 +97,23 @@ public class CustomerInteraction : MonoBehaviour
             GameManager.Instance.ShowDialogue("I'm done!");
             return;
         }
-        else
+
+        AcceptDrink();
+    }
+
+    void AcceptDrink()
+    {
+        Debug.Log("Drink accepted by customer.");
+        GameManager.Instance.ShowDialogue("Thanks! That’s the drink I wanted!");
+
+        if (pickUpScript != null && pickUpScript.HeldObject != null)
         {
-            Debug.Log("Order is waiting for a drink.");
-        }
-
-        PickUpScript pickUpScript = player.GetComponent<PickUpScript>();
-        if (pickUpScript == null)
-        {
-            Debug.LogWarning("PickUpScript component NOT found on player.");
-            GameManager.Instance.ShowDialogue("I'd like a " + order.GetDrinkName() + " drink!");
-            return;
-        }
-
-        if (pickUpScript.HeldObject == null)
-        {
-            Debug.Log("Player is NOT holding any drink.");
-            GameManager.Instance.ShowDialogue("I'd like a " + order.GetDrinkName() + " drink!");
-            return;
-        }
-
-        GameObject heldCup = pickUpScript.HeldObject;
-        Debug.Log("Player is holding cup: " + heldCup.name);
-
-        bool accepted = order.TryReceiveDrink(heldCup);
-        Debug.Log($"order.TryReceiveDrink returned: {accepted}");
-
-        if (accepted)
-        {
-            Debug.Log("Drink accepted by customer.");
-            GameManager.Instance.ShowDialogue("Thanks! That’s the drink I wanted!");
-            Destroy(heldCup);
+            Destroy(pickUpScript.HeldObject);
             pickUpScript.ClearHeldObject();
-            Invoke(nameof(HideDialogue), 2f);
-            drinkDelivered = true;
         }
-        else
-        {
-            Debug.Log("Drink was NOT accepted by customer.");
-            GameManager.Instance.ShowDialogue("That's not what I ordered.");
-            Invoke(nameof(HideDialogue), 2f);
-        }
+
+        drinkDelivered = true;
+        Invoke(nameof(HideDialogue), 2f);
     }
 
     void HideDialogue()
